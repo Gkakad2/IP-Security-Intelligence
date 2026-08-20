@@ -1,87 +1,125 @@
-# IP Security Intelligence
+# 🛡️ IP Security Intelligence
 
-A multi-source IP security intelligence and threat assessment tool for investigating IPv4 and IPv6 addresses.
+<p align="center">
+  <img src="https://img.shields.io/badge/Project-IP%20Security%20Intelligence-0A66C2?style=for-the-badge&logo=shield&logoColor=white" alt="IP Security Intelligence">
+  <img src="https://img.shields.io/badge/Platform-Linux-black?style=for-the-badge&logo=linux&logoColor=white" alt="Linux">
+  <img src="https://img.shields.io/badge/Language-Bash-4EAA25?style=for-the-badge&logo=gnu-bash&logoColor=white" alt="Bash">
+  <img src="https://img.shields.io/badge/Version-6.6-blue?style=for-the-badge" alt="Version">
+</p>
 
-The tool collects network ownership, ASN, DNS, geolocation, reputation, blocklist, and internet-exposure information from multiple sources and generates a consolidated risk assessment with detailed investigation reports.
+<p align="center">
+  <b>Multi-source IP intelligence, threat assessment and investigation tool.</b>
+</p>
 
-## Features
+<p align="center">
+  Investigate an IP → Correlate intelligence → Calculate risk → Generate an evidence-based report
+</p>
 
-- IPv4/IPv6 validation
-- RDAP lookup
-- WHOIS lookup
-- Reverse DNS / PTR lookup
-- ASN and BGP intelligence
-- Team Cymru ASN cross-check
-- IPinfo network and geolocation intelligence
-- VirusTotal reputation
-- AbuseIPDB reputation
-- GreyNoise intelligence
-- AlienVault OTX intelligence
-- Shodan InternetDB
-- Spamhaus ZEN
-- SpamCop
-- Barracuda DNSBL
-- Risk scoring
-- Severity classification
-- Major findings detection
-- Source availability tracking
-- Interactive scanning
-- Single-IP scanning
-- Batch IP scanning
-- HTML reports
-- Text reports
-- Investigation history
-- Custom report directories
-- Optional API integrations
+---
 
-## Architecture
+## 🔎 Overview
+
+**IP Security Intelligence** is a standalone security investigation tool designed to collect and correlate information about an IPv4 or IPv6 address from multiple public and intelligence sources.
+
+Instead of relying on a single IP reputation service, the tool combines:
+
+- 🌐 Network ownership information
+- 🏢 Organization and ISP information
+- 🔢 ASN and BGP intelligence
+- 🗺️ Geolocation
+- 🔍 Reverse DNS
+- 🧠 Threat intelligence
+- 🚨 IP reputation
+- 🛰️ Internet exposure information
+- 📛 DNS blocklist results
+- 📊 Risk scoring
+- 📝 Investigation reports
+
+The objective is to provide a **single consolidated view of an IP address** and help analysts determine whether additional investigation is required.
+
+---
+
+# ✨ Key Features
+
+| Category | Capabilities |
+|---|---|
+| 🌐 Network Intelligence | RDAP, WHOIS, CIDR, NetRange, Organization |
+| 🔢 ASN Intelligence | ASN lookup, origin ASN, ASN organization, BGP cross-check |
+| 🔍 DNS Intelligence | Reverse DNS / PTR lookup |
+| 🗺️ Geolocation | Country, region, city, ISP, organization |
+| 🚨 Threat Intelligence | VirusTotal, AbuseIPDB, GreyNoise, OTX |
+| 🛰️ Internet Exposure | Shodan InternetDB |
+| 📛 DNSBL | Spamhaus ZEN, SpamCop, Barracuda |
+| 🧮 Risk Analysis | Risk score, severity, findings |
+| 📑 Reporting | HTML and TXT reports |
+| 📦 Batch Analysis | Scan multiple IP addresses |
+| 🕘 History | Browse previously scanned IPs |
+| ⚙️ Automation | CLI and batch execution |
+| 🔐 API Flexibility | Optional API keys; core functionality works without them |
+
+---
+
+# 🏗️ How It Works
 
 ```text
-                         IP ADDRESS
-                              |
-                              v
-                     +----------------+
-                     | Input Validation|
-                     +-------+--------+
-                             |
-          +------------------+------------------+
-          |                  |                  |
-          v                  v                  v
-       RDAP/WHOIS           DNS              ASN/BGP
-          |                  |                  |
-          +------------------+------------------+
-                             |
-                             v
-                    Network Intelligence
-                             |
-             +---------------+---------------+
-             |               |               |
-             v               v               v
-           GeoIP          Reverse DNS      Organization
-             |               |               |
-             +---------------+---------------+
-                             |
-                             v
-                    Threat Intelligence
-                             |
-          +------------------+------------------+
-          |                  |                  |
-          v                  v                  v
-      VirusTotal         AbuseIPDB          GreyNoise
-          |                  |                  |
-          +------------------+------------------+
-                             |
-                 +-----------+-----------+
-                 |                       |
-                 v                       v
-             DNSBLs              Shodan InternetDB
-                 |                       |
-                 +-----------+-----------+
-                             |
-                             v
-                     Risk Assessment
-                             |
-                    +--------+--------+
-                    |                 |
-                    v                 v
-                TXT Report        HTML Report
+                         ┌─────────────────┐
+                         │   USER / SOC    │
+                         │  Enters an IP   │
+                         └────────┬────────┘
+                                  │
+                                  ▼
+                         ┌─────────────────┐
+                         │ IP VALIDATION   │
+                         │ IPv4 / IPv6     │
+                         └────────┬────────┘
+                                  │
+             ┌────────────────────┼────────────────────┐
+             │                    │                    │
+             ▼                    ▼                    ▼
+      ┌────────────┐       ┌────────────┐       ┌────────────┐
+      │ RDAP/WHOIS │       │  ASN/BGP   │       │    DNS     │
+      └──────┬─────┘       └──────┬─────┘       └──────┬─────┘
+             │                    │                    │
+             └────────────────────┼────────────────────┘
+                                  │
+                                  ▼
+                       ┌─────────────────────┐
+                       │ NETWORK INTELLIGENCE│
+                       └──────────┬──────────┘
+                                  │
+              ┌───────────────────┼───────────────────┐
+              │                   │                   │
+              ▼                   ▼                   ▼
+        ┌───────────┐       ┌────────────┐      ┌────────────┐
+        │  GeoIP    │       │ Reputation │      │   DNSBL    │
+        └─────┬─────┘       └──────┬─────┘      └──────┬─────┘
+              │                    │                   │
+              │          ┌─────────┼─────────┐         │
+              │          │         │         │         │
+              │          ▼         ▼         ▼         │
+              │      VirusTotal AbuseIPDB GreyNoise    │
+              │          │         │         │         │
+              └──────────┴─────────┼─────────┴─────────┘
+                                   │
+                                   ▼
+                         ┌────────────────────┐
+                         │ SHODAN INTERNETDB  │
+                         │ Ports / CVEs / CPE │
+                         └─────────┬──────────┘
+                                   │
+                                   ▼
+                         ┌────────────────────┐
+                         │ CORRELATION ENGINE │
+                         └─────────┬──────────┘
+                                   │
+                                   ▼
+                         ┌────────────────────┐
+                         │   RISK ASSESSMENT  │
+                         │ Score + Severity   │
+                         └─────────┬──────────┘
+                                   │
+                    ┌──────────────┴──────────────┐
+                    ▼                             ▼
+             ┌──────────────┐              ┌──────────────┐
+             │  TXT REPORT  │              │ HTML REPORT  │
+             └──────────────┘              └──────────────┘
