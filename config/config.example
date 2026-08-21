@@ -1,0 +1,17 @@
+# IP Security Intelligence configuration example
+#
+# Set API credentials as environment variables.
+# Never commit real API keys or tokens.
+
+VT_API_KEY=""
+ABUSEIPDB_API_KEY=""
+GREYNOISE_API_KEY=""
+OTX_API_KEY=""
+IPINFO_TOKEN=""
+
+# Optional paths
+REPORT_DIR="./reports"
+CACHE_DIR="./cache"
+
+# Cache lifetime in seconds
+CACHE_TTL=86400
